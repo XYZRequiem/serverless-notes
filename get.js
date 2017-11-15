@@ -23,6 +23,7 @@ export async function main(event, context, callback) {
             }));
         }
     } catch (e) {
+        console.log(e)
         callback(null, failure({ status: false }));
     }
 }

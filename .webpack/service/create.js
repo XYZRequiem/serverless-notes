@@ -107,16 +107,17 @@ var main = exports.main = function () {
 
                     case 5:
                         callback(null, (0, _responseLib.success)(params.Item));
-                        _context.next = 11;
+                        _context.next = 12;
                         break;
 
                     case 8:
                         _context.prev = 8;
                         _context.t0 = _context["catch"](2);
 
+                        console.log(_context.t0);
                         callback(null, (0, _responseLib.failure)({ status: false }));
 
-                    case 11:
+                    case 12:
                     case "end":
                         return _context.stop();
                 }
