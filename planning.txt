@@ -1,0 +1,124 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "mobileanalytics:PutEvents",
+        "cognito-sync:*",
+        "cognito-identity:*"
+      ],
+      "Resource": [
+        "*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:*"
+      ],
+      "Resource": [
+        "arn:aws:s3:::therapp-mental-health-bucket/${cognito-identity.amazonaws.com:sub}*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "execute-api:Invoke"
+      ],
+      "Resource": [
+        "arn:aws:execute-api:YOUR_API_GATEWAY_REGION:*:YOUR_API_GATEWAY_ID/*"
+      ]
+    }
+  ]
+}
+
+Therapp Mental Health
+
+Fullstack Serverless Web App
+
+Intro and Goal
+Therapp (pronounced Ther-up-ee), is a Serverless Fullstack Web App that enables individuals with Mental Health Issues to find valid and needed services catered to their specific needs, near them. Others in the space simply list Doctors or Offices and their specialty, location and other information. This forces users to look at places that have the service they need and make the evaluation of whether it is worth it to seek out a therapist/service. The goal of Therapp is to make Mental Health Services more accessible to those that need it.
+
+Who’s it for?
+	Therapp is meant for individuals: 
+Seeking assistance for themselves
+Seeking assistance for another
+Seeking information about mental health services near them
+
+Why build it?
+	Coming from life experience and seeing how it affects the people around me and myself. I felt that this app was something that could be utilised by loved ones and myself. As mental health is becoming a more public and prominent, more people are willing to reach out and get help. The issue is that there are a lot of apps that display help locations but very few that allow you to find what you need near you effectively.
+
+User Types
+Non-Registered Users - People that have yet to register
+Registered Users - People that have registered and completed the onboarding/ filled out the form
+Doctors/Help Centers - People that the user is linked to and that can submit session notes for the user after their meeting (optional stretch goal)
+
+models
+    - User
+        - name
+        - age
+        - email
+        - ethnicity
+        - gender
+        - known_conditions
+        - services_sought
+        - public_file
+        - private_file
+
+    - SearchResult
+        - agency_name
+        - legal_status
+        - office_phone
+        - email
+        - website
+        - address
+        - neighbourhood
+        - accessibility
+        - hours
+        - eligibility
+        - languages
+        - application
+        - description_of_service
+        - date_updated
+    
+External APIs
+    - Google Maps
+    - Google Places
+
+Non-Registered User Object
+{
+	name: “anon”,
+	age: null,
+    email: ''
+	ethnicity: "",
+	gender: "",
+	knownConditions: [“”]
+	servicesSought: [“”],
+	publlicFile: "",
+	privateFile: ""
+}
+
+
+Registered User Object
+{
+    name: “John Doe”,
+	age: 23,
+    email: 'john.doe@email.com',
+	ethnicity: "Chinese",
+	gender: Female/Male/Non-Binary,
+	knownConditions: [“Anxiety”, "Depression"]
+	servicesSought: [“Cognitive Behavioral Therapy”],
+	publlicFile: "http://fullurl.com/endpoint/public_filename.txt",
+	privateFile: "http://fullurl.com/endpoint/private_filename.txt"
+}
+
+Doctors/Help Center
+{} // no reference yet
+
+
+Authenticate and Authorize
+Authentication and Authorization will both be controlled by Amazon AWS cognito
+New registrants will receive an email with a code for 2 factor Authentication
+User will register using their email address (possible to extend it to email/username but focusing on known techniques)
+

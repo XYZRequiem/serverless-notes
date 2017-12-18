@@ -91,3 +91,15 @@ functions:
           method: delete
           cors: true
           authorizer: aws_iam
+
+  email:
+    # Defines an HTTP API endpoint that calls the main function in delete.js
+    # - path: url path is /notes/{id}
+    # - method: DELETE request
+    handler: email.main
+    events:
+      - http:
+          path: notes/{id}
+          method: post
+          cors: true
+          authorizer: aws_iam
