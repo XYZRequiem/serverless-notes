@@ -10,16 +10,24 @@ export async function main(event, context, callback) {
         Item: {
             userid: event.requestContext.identity.cognitoIdentityId,
             noteid: uuid.v1(),
+            title: null,
             content: data.content,
+            creatorId: event.requestContext.identity.cognitoIdentityId,
+            isPublic: false,
+            publishDate: null,
+            project: null,
+            labelId: null,
+            albumId: null,
             attachment: data.attachment,
-            createdAt: new Date().getTime()
+            createdAt: new Date().getTime(),
+            modifiedAt: new Date().getTime(),
         }
     };
     try {
         await dynamoDbLib.call("put", params);
         callback(null, success(params.Item));
     } catch (e) {
-        console.log(e)
+        // console.log(e)
         callback(null, failure({ status: false }));
     }
 }

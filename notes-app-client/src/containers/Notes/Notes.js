@@ -82,13 +82,13 @@ export default class Notes extends Component {
             content: content,
             attachments: [attachment]
         }
-        console.log(params)
-        axios.post('http://localhost:8080', params)
+        
+        axios.post(`https://s4cj3cmnl6.execute-api.ca-central-1.amazonaws.com/prod/notes/${this.props.match.params.id}`, params)
             .then(res => {
-                console.log(res)
+                // console.log(res)
             })
             .catch(err => {
-                console.log(err)
+                // console.log(err)
             })
         // sendMail('crazycroc101@gmail.com', 'Scratch Note', this.state.content)
     }
@@ -115,7 +115,7 @@ export default class Notes extends Component {
                                         href={this.state.note.attachment}
                                     >
                                         {/* {this.formatFilename(this.state.note.attachment)} */}
-                                        <img src={this.state.note.attachment} />
+                                        <img src={this.state.note.attachment} alt={"k"}/>
                                     </a>
                                 </FormControl.Static>
                                 
