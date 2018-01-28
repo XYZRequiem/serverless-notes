@@ -1,6 +1,18 @@
 .NewNote form {
     padding-bottom: 15px;
    }
+
+   .NewNote form .sub-content {
+       background-color: #F8F8F8;
+       padding: 8px;
+       margin-bottom: 15px;
+   }
+
+   .NewNote form text {
+       margin-bottom: 8px;
+       font-size: 24px;
+   }
+
    .NewNote form textarea {
     height: 300px;
     font-size: 24px;

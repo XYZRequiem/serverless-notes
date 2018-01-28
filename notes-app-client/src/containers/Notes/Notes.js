@@ -3,7 +3,7 @@ import { invokeApig } from "../../libs/awsLib";
 import {FormGroup, FormControl, ControlLabel} from 'react-bootstrap'
 import LoaderButton from '../../components/LoaderButton'
 import config from '../../config'
-import axios from 'axios'
+// import axios from 'axios'
 export default class Notes extends Component {
     constructor(props) {
         super(props);
@@ -67,10 +67,11 @@ export default class Notes extends Component {
     }
     handleMailSubmit = async event => {
         event.preventDefault()
+        
         let {content, note} = this.state
         let {authEmail} = this.props
         let attachment = {
-            filename: authEmail + 'My Therapp Attachment',
+            filename: authEmail + 'My Lyric-Builder Attachment',
             path: note.attachment,
             contentType: 'image/jpeg'
             // contentType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
@@ -78,20 +79,27 @@ export default class Notes extends Component {
         
         let params = {
             toAddress: 'crazycroc101@gmail.com',
-            subject: `'Therapp Message' from ${authEmail}`,
+            subject: `'Lyric Builder Message' from ${authEmail}`,
             content: content,
             attachments: [attachment]
         }
-        
-        axios.post(`https://s4cj3cmnl6.execute-api.ca-central-1.amazonaws.com/prod/notes/${this.props.match.params.id}`, params)
-            .then(res => {
-                // console.log(res)
-            })
-            .catch(err => {
-                // console.log(err)
-            })
+       
+        return invokeApig({
+              path: `/note/${this.props.match.params.id}`,
+              method: "POST",
+              body: params
+            });
+          }
+
+        // axios.post(`https://s4cj3cmnl6.execute-api.ca-central-1.amazonaws.com/prod/notes/${this.props.match.params.id}`, params)
+        //     .then(res => {
+        //         // console.log(res)
+        //     })
+        //     .catch(err => {
+        //         // console.log(err)
+        //     })
         // sendMail('crazycroc101@gmail.com', 'Scratch Note', this.state.content)
-    }
+    // }
 
     render() {
         return (

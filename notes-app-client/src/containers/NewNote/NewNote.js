@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import { invokeApig, s3Upload } from "../../libs/awsLib";
 import LoaderButton from "../../components/LoaderButton";
+import uuid from 'uuid'
 import config from "../../config";
 import "./NewNote.css";
 export default class NewNote extends Component {
@@ -10,7 +11,20 @@ export default class NewNote extends Component {
     this.file = null;
     this.state = {
       isLoading: null,
-      content: ""
+      content: [
+        {
+          _id: uuid.v1(),
+          title: '',
+          body: '',
+          owner: null
+        },
+        {
+          _id: uuid.v1(),
+          title: '',
+          body: '',
+          owner: null
+        },
+      ]
     };
   }
   validateForm() {
@@ -33,17 +47,39 @@ export default class NewNote extends Component {
     this.setState({ isLoading: true });
     try {
       const uploadedFilename = this.file
-      ? (await s3Upload(this.file)).Location
-      : null;
+        ? (await s3Upload(this.file)).Location
+        : null;
       await this.createNote({
-      content: this.state.content,
-      attachment: uploadedFilename
+        content: this.state.content,
+        attachment: uploadedFilename
       });
       this.props.history.push("/");
-      } catch (e) {
+    } catch (e) {
       alert(e);
       this.setState({ isLoading: false });
-      }
+    }
+  }
+
+  displayContent() {
+    return this.state.content.map(({ _id, title, body }) => {
+      return (
+        <FormGroup controlId="content" className='sub-content'>
+          
+            <FormControl
+              onChange={this.handleChange} // modify handle change to work for title and body and function by id
+              value={title}
+              componentClass='text'
+            />
+
+            <FormControl
+              onChange={this.handleChange}
+              value={body}
+              componentClass="textarea"
+            />
+        
+        </FormGroup>
+      )
+    })
   }
 
   createNote(note) {
@@ -58,13 +94,7 @@ export default class NewNote extends Component {
     return (
       <div className="NewNote">
         <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="content">
-            <FormControl
-              onChange={this.handleChange}
-              value={this.state.content}
-              componentClass="textarea"
-            />
-          </FormGroup>
+        {this.displayContent()}
           <FormGroup controlId="file">
             <ControlLabel>Attachment</ControlLabel>
             <FormControl onChange={this.handleFileChange} type="file"
