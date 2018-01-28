@@ -4,14 +4,14 @@ export async function main(event, context, callback) {
     const params = {
         TableName: "notes",
         // 'KeyConditionExpression' defines the condition for the query
-        // - 'userid = :userid': only return items with matching 'userid'
+        // - 'userId = :userId': only return items with matching 'userid'
         // partition key
         // 'ExpressionAttributeValues' defines the value in the condition
-        // - ':userid': defines 'userid' to be Identity Pool identity id
+        // - ':userId': defines 'userid' to be Identity Pool identity id
         // of the authenticated user
-        KeyConditionExpression: "userid = :userid",
+        KeyConditionExpression: "userId = :userId",
         ExpressionAttributeValues: {
-            ":userid": event.requestContext.identity.cognitoIdentityId
+            ":userId": event.requestContext.identity.cognitoIdentityId
         }
     };
     try {

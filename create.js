@@ -8,8 +8,8 @@ export async function main(event, context, callback) {
     const params = {
         TableName: "notes",
         Item: {
-            userid: event.requestContext.identity.cognitoIdentityId,
-            noteid: uuid.v1(),
+            userId: event.requestContext.identity.cognitoIdentityId,
+            noteId: uuid.v1(),
             title: null,
             content: data.content,
             creatorId: event.requestContext.identity.cognitoIdentityId,
